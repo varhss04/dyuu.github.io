@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twenteen</title>
+    <style>
+        h1 {
+            background-color: #edcc9d !important;
+            color: #6b5720;
+            font-family: Georgia;
+            font-weight: normal;
+            font-size: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        body {
+            background-image: url("bg2.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            transition: background-color 1s ease-in-out;
+        }
+
+        .rectangle1, .rectangle2, .rectangle3, .rectangle4 {
+            width: 250px;
+            height: 330px;
+            background-color: #a67b47;
+            position: absolute;
+            top: 100px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .rectangle1 { left: 50px; }
+        .rectangle2 { left: 350px; }
+        .rectangle3 { left: 650px; }
+        .rectangle4 { left: 950px; }
+
+        #img1, #img2, #img3, #img4 {
+            width: 220px;
+            height: 270px;
+            margin: 18px 15px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #f0f7be;
+            margin: 15% auto;
+            padding: 20px;
+            border: 2px solid white;
+            width: 40%;
+            color: #6b5720;
+            text-align: center;
+            border-radius: 12px;
+            font-family: Garamond;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Button at the bottom */
+        .click-me-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background-color: #edcc9d;
+            color: #6b5720;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .click-me-button:hover {
+            background-color: #f1d36b;
+        }
+
+        /* Hover effects for the images */
+        .rectangle1:hover, .rectangle2:hover, .rectangle3:hover, .rectangle4:hover {
+            transform: scale(1.1);
+        }
+
+        #img1:hover, #img2:hover, #img3:hover, #img4:hover {
+            transform: scale(1.05);
+        }
+
+        /* Falling hearts animation */
+        .heart {
+            position: absolute;
+            top: -50px;
+            font-size: 2rem;
+            color: red;
+            animation: fall 3s infinite;
+        }
+
+        /* Falling confetti animation */
+        .confetti {
+            position: absolute;
+            top: -50px;
+            width: 10px;
+            height: 10px;
+            background-color: #ffcc00;
+            animation: confettiFall 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -50px;
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+                transform: translateX(random(-100px, 100px));
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                top: -50px;
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+                transform: rotate(360deg) translateX(random(-100px, 100px));
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <h1>dyuthi day :)</h1>
+
+    <div class="rectangle1" onclick="displayMessage(messages.natabhairavi)">
+        <img src="1.jpg" id="img1">
+    </div>
+
+    <div class="rectangle2" onclick="displayMessage(messages.keera)">
+        <img src="2.jpg" id="img2">
+    </div>
+
+    <div class="rectangle3" onclick="displayMessage(messages.image3)">
+        <img src="3.jpg" id="img3">
+    </div>
+
+    <div class="rectangle4" onclick="displayMessage(messages.image4)">
+        <img src="4.jpg" id="img4">
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p id="modal-text"></p>
+        </div>
+    </div>
+
+    <!-- Button to trigger falling hearts and confetti -->
+    <button class="click-me-button" onclick="startCelebration()">Shower Yourself with Love</button>
+
+    <script>
+         const messages = {
+    natabhairavi: `
+        20th melakarta raaga: Natabhairavi --> You know I had to include this because my bbg is turning 20. 
+        But the ironic thing is it really is nata- drama (hehe) and bhairavi - goddess Durga combined naw. 
+        Truly pivotal 8th grade DRAMA is back. Anyways, the whole raaga is meant to signify grandeur, devotion, 
+        passion, and introspective nature—everything you'll need as you're entering your twenties. 
+        I can't wait to see you flourish in this phase of your life. Mwah!
+    `,
+    keera: `
+        21st melakarta raaga: Keeravani --> now honestly was i gonna NOT mention Keeravani? your fav? it might be similar to the previous one in terms of 
+        grandeur, devotion and melancholy but it has another aspect- romance! may your twenties be filled w sweet romances and fulfilling relationships. 
+        the raaga literally translates to "bird of the evening"  symbolizing a mystical charm and connection to nature, and mythologically, it resonates 
+        with themes of transformation, and not to freak you out or anything BUT YOURE NOT A TEEN ANYMORE SO what's more perfect than healing your emotional 
+        scars, reminiscing your lovable moments with this therapeutic raaga mwah!
+    `,
+    image3: `
+        29th melakarta raaga: Shankarabharana --> this is honestly a surprising raaga, perfect for your twenties because you dont know what is about to come but nevertheless it's so exciting! on the outside, 
+        this raaga is supposed to be all serious but it has this element of surprise with its playfulness, a way it starts off serious but turns joyful or blissful! 
+        i hope nothing but this from now on hehe,grind nicely and ace your academics while still being the retarded dyu ive known since forever ! ily mwah,
+    `,
+    image4: `
+        HAHAHA remember my dilemma of having to sing it that somehow transformed into our inside joke (tbf i miss school with you) this raaga is literally so cool 
+        for symbolizing female camaraderie and heartful connections! the spiritual connotations of Kharaharapriya — often linked to Lord Vishnu — can also symbolize 
+        the heartfelt connection between a woman and her inner self or her relationship with others. In its performance, it expresses the depth of emotional bonds,
+        whether it's a deep friendship or a romantic relationship. and oh  my god how do i even thank you about the most perfect awesome woman that you are in my 
+        life I LOVE YOU SM and im so happy there was some invisible string connecting us that made us the best of friends! because there is no one more genuine and
+        real like you and i hope in your twenties the emotional bond just exponentially grows bbg ily mwah!,
+    `,
+};
+
+
+        function displayMessage(message) {
+            const modal = document.getElementById("modal");
+            const modalText = document.getElementById("modal-text");
+            modalText.textContent = message;
+            modal.style.display = "block";
+        }
+
+        const span = document.getElementsByClassName("close-btn")[0];
+        span.onclick = function() {
+            document.getElementById("modal").style.display = "none";
+        };
+
+        window.onclick = function(event) {
+            const modal = document.getElementById("modal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        function startCelebration() {
+            const container = document.body;
+            for (let i = 0; i < 5; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.textContent = '❤️';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDuration = `${Math.random() * 2 + 2}s`;
+                container.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }
+
+            for (let i = 0; i < 20; i++) {
+                let confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
+                container.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#ff6347', '#ffcc00', '#32cd32', '#1e90ff', '#ff1493'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+</body>
+</html>
